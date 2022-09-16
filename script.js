@@ -20,6 +20,11 @@ const Gameboard = {
             const box = document.createElement('box');
             box.className = 'gridBox';
             box.id = i + "box";
+            if(i==3){
+                const test = document.createElement('p');
+                test.textContent = 'test'
+                box.appendChild(test)
+            }
             grid.appendChild(document.createElement('box'));
             gameArray.push(box);
         }
@@ -35,7 +40,7 @@ const tile = {
 
 
 const playerOne = {
-    name: 'player One',
+    name: 'Player One',
     playerOneText: function () {
         const playerOneText = document.createElement('p');
         playerOneText.className = 'player';
@@ -46,13 +51,14 @@ const playerOne = {
 }
 
 const playerTwo = {
-    name: 'player Two',
+    name: 'Player Two',
     playerTwoText: function () {
+        const playerTwoDiv = document.createElement('div');
         const playerTwoText = document.createElement('p');
-        playerTwoText.className = 'player';
+        playerTwoDiv.className = 'player';
         playerTwoText.textContent = playerTwo.name;
-
-        return gameDiv.appendChild(playerTwoText);
+        playerTwoDiv.appendChild(playerTwoText)
+        return gameDiv.appendChild(playerTwoDiv);
     }
 }
 
