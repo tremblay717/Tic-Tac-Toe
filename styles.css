@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+body {
+    background-color: black;
+    font-family: 'Roboto';
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+    
+}
+
+.header {
+    
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    color:white;
+    margin-top: 5%;
+    font-size: 3rem;
+}
+
+.gameDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-self: center;
+    justify-content: flex-start;
+    gap: 2%;
+}
+
+.divGrid {
+    background-color: white;
+    display: grid;
+    grid-template: calc(100%/3) calc(100%/3) calc(100%/3) / calc(100%/3) calc(100%/3) calc(100%/3);
+    width:35rem;
+    height: 35rem;
+    align-self: center;
+    margin-top: 7%;
+}
+
+box {
+    border: solid black;
+    border-width: 1px;
+}
+
+.player {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+}
