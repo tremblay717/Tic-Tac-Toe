@@ -4,30 +4,27 @@ const gameDiv = document.querySelector('.gameDiv');
 // box.className= 'gridBox';
 let gameArray = [];
 
-const Gameboard = {
-    title: 'Tic Tac Toe',
-    gameArray: gameArray,
-    gameBoard: function () {
+const grid = document.createElement('div');
+grid.className = 'divGrid';
+grid.id = 'divGrid';
 
-        const grid = document.createElement('div');
-        grid.className = 'divGrid';
-        grid.id = 'divGrid';
+const box = document.createElement('box');
+box.className = 'gridBox';
 
-        const box = document.createElement('box');
-        box.className = 'gridBox';
 
-        for (let i = 0; i < 9; i++) {
-            const box = document.createElement('box');
-            box.className = 'gridBox';
-            box.style.backgroundColor = "yellow"
-            box.id = i + "box";
-            grid.appendChild(document.createElement('box'));
-            gameArray.push(box);
-        }
-        return gameDiv.appendChild(grid);
-    }
+for (let i = 0; i < 9; i++) {
+    const box = document.createElement('box');
+    box.className = 'gridBox';
+    box.id = i + "box";
+    box.setAttribute('onclick', 'Game(this.id)');
+    grid.appendChild(box);
+    gameArray.push(box);
 }
 
+const Gameboard = {
+    title: 'Tic Tac Toe',
+    gameArray: gameArray
+}
 
 const tile = {
     x: 'X',
@@ -70,6 +67,7 @@ const playerOne = {
 const playerTwo = {
     name: 'Player Two',
     playerTwoText: function () {
+
         const playerTwoText = document.createElement('p');
         playerTwoText.className = 'player';
         playerTwoText.textContent = playerTwo.name;
@@ -99,12 +97,12 @@ const playerTwo = {
 }
 
 playerOne.playerOneText();
-Gameboard.gameBoard();
+gameDiv.appendChild(grid)
+// Gameboard.gameBoard();
 playerTwo.playerTwoText();
 
 const playerOneX = document.getElementById('playerOneX');
 const playerOneO = document.getElementById('playerOneO');
-
 
 const playerTwoX = document.getElementById('playerTwoX');
 const playerTwoO = document.getElementById('playerTwoO');
@@ -112,7 +110,9 @@ const playerTwoO = document.getElementById('playerTwoO');
 // Only player One can decide its symbol (X or O);
 playerOneX.onclick = function () {
 
-    if (playerOneO.style.color == 'red') {
+    if (playerTurn.length > 0) {
+        return;
+    } else if (playerOneO.style.color == 'red') {
         return;
     } else if (playerOneX.style.color == 'black') {
         playerOneX.style.color = "red";
@@ -120,13 +120,13 @@ playerOneX.onclick = function () {
     } else {
         playerOneX.style.color = "black";
         playerTwoO.style.color = "black";
-
     }
 }
 
 playerOneO.onclick = function () {
-
-    if (playerOneX.style.color == 'red') {
+    if (playerTurn.length > 0) {
+        return;
+    } else if (playerOneX.style.color == 'red') {
         return;
     } else if (playerOneO.style.color == 'black') {
         playerOneO.style.color = "red";
@@ -137,3 +137,36 @@ playerOneO.onclick = function () {
     }
 }
 
+let playerTurn = []
+
+function Game(id) {
+
+
+    const tile = document.getElementById(id);
+
+    if (tile.textContent != "") {
+        return;
+    } else {
+
+        if (playerTurn.length == 0 || playerTurn[playerTurn.length - 1] == "p2") {
+
+            if (playerOneX.style.color == "red") {
+                tile.textContent = "X"
+
+            } else if (playerOneO.style.color == "red") {
+                tile.textContent = "O"
+            }
+            playerTurn.push('p1');
+
+        } else if (playerTurn[playerTurn.length - 1] == "p1") {
+
+            if (playerTwoX.style.color == "red") {
+                tile.textContent = "X"
+
+            } else if (playerTwoO.style.color == "red") {
+                tile.textContent = "O"
+            }
+            playerTurn.push('p2');
+        }
+    }
+}

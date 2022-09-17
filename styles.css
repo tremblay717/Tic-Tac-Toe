@@ -107,3 +107,11 @@ box {
     height: 50px;
     text-align: center;
 }
+
+.gridBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:black;
+    font-size:4rem;
+}
