@@ -62,13 +62,11 @@ box {
     font-size: 1.25rem;
 }
 
-
-
 .lastSection{
     display: flex;
     flex-direction: column;
     height: 100%;
-    margin-top: 5%;
+    margin-top: 1%;
     margin-bottom: 5%;
     gap: 20px;
     align-items:center;

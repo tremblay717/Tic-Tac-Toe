@@ -142,9 +142,11 @@ let lastSection = document.querySelector('.lastSection');
 
 const endMessage = document.createElement('span');
 
+const boxes = document.querySelectorAll('.gridBox')
 
 let playerTurn = []
 
+// We call our Game Function when player One clicks on a tile
 function Game(id) {
 
     const tile = document.getElementById(id);
@@ -215,22 +217,27 @@ function Game(id) {
         (gameArray[2].textContent == "X" && gameArray[4].textContent == "X" && gameArray[6].textContent == "X") ||
         (gameArray[2].textContent == "O" && gameArray[4].textContent == "O" && gameArray[6].textContent == "O")) {
 
-        // lastSection.removeChild(resetButton);
-
         if (playerTurn[playerTurn.length - 1] == "p1") {
 
-            endMessage.textContent = "Game Over, " + playerOne.name + " won!"
+            endMessage.textContent = "Game over, " + playerOne.name + " won!"
         }
         else if (playerTurn[playerTurn.length -1] == "p2"){
-            endMessage.textContent = "Game Over, " + playerTwo.name + " won!"
+            endMessage.textContent = "Game over, " + playerTwo.name + " won!"
         }
 
         lastSection.prepend(endMessage);
         playerTurn.push('end');
 
+    } 
+
+    else if (playerTurn.length == 9){
+        endMessage.textContent = "Game over, it's a tie!";
+        lastSection.prepend(endMessage);
+        playerTurn.push('end');
     }
 
 }
+
 
 const resetButton = document.querySelector('button');
 
