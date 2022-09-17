@@ -66,10 +66,12 @@ box {
 
 .lastSection{
     display: flex;
+    flex-direction: column;
     height: 100%;
     margin-top: 5%;
     margin-bottom: 5%;
-    align-items:flex-start;
+    gap: 20px;
+    align-items:center;
     align-content: center;
     justify-content: center;
 }
@@ -84,10 +86,6 @@ box {
     border: none;
     box-shadow: 0px 15px 10px -15px #111;
     cursor: pointer;   
-}
-
-#3box{
-    background-color: red;
 }
 
 .tileDiv {

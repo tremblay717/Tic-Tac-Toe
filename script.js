@@ -112,11 +112,11 @@ playerOneX.onclick = function () {
 
     if (playerTurn.length > 0) {
         return;
-    } else if (playerOneO.style.color == 'red') {
+    } else if (playerOneO.style.color == 'blue') {
         return;
     } else if (playerOneX.style.color == 'black') {
-        playerOneX.style.color = "red";
-        playerTwoO.style.color = "red";
+        playerOneX.style.color = "blue";
+        playerTwoO.style.color = "green";
     } else {
         playerOneX.style.color = "black";
         playerTwoO.style.color = "black";
@@ -126,47 +126,127 @@ playerOneX.onclick = function () {
 playerOneO.onclick = function () {
     if (playerTurn.length > 0) {
         return;
-    } else if (playerOneX.style.color == 'red') {
+    } else if (playerOneX.style.color == 'blue') {
         return;
     } else if (playerOneO.style.color == 'black') {
-        playerOneO.style.color = "red";
-        playerTwoX.style.color = "red";
+        playerOneO.style.color = "blue";
+        playerTwoX.style.color = "green";
     } else {
         playerOneO.style.color = "black";
         playerTwoX.style.color = "black";
     }
 }
 
+
+let lastSection = document.querySelector('.lastSection');
+
+const endMessage = document.createElement('span');
+
+
 let playerTurn = []
 
 function Game(id) {
-
 
     const tile = document.getElementById(id);
 
     if (tile.textContent != "") {
         return;
+    } else if (playerTurn[playerTurn.length - 1] == "end") {
+
+        return;
+
     } else {
 
         if (playerTurn.length == 0 || playerTurn[playerTurn.length - 1] == "p2") {
 
-            if (playerOneX.style.color == "red") {
+            if (playerOneX.style.color == "blue") {
                 tile.textContent = "X"
 
-            } else if (playerOneO.style.color == "red") {
+            } else if (playerOneO.style.color == "blue") {
                 tile.textContent = "O"
             }
+            tile.style.color = "blue"
             playerTurn.push('p1');
 
         } else if (playerTurn[playerTurn.length - 1] == "p1") {
 
-            if (playerTwoX.style.color == "red") {
+            if (playerTwoX.style.color == "green") {
                 tile.textContent = "X"
 
-            } else if (playerTwoO.style.color == "red") {
+            } else if (playerTwoO.style.color == "green") {
                 tile.textContent = "O"
             }
+            tile.style.color = "green";
             playerTurn.push('p2');
         }
+
     }
+
+    if (
+        //1st row
+        (gameArray[0].textContent == "X" && gameArray[1].textContent == "X" && gameArray[2].textContent == "X") ||
+        (gameArray[0].textContent == "O" && gameArray[1].textContent == "O" && gameArray[2].textContent == "O") ||
+
+        //2nd row
+        (gameArray[3].textContent == "X" && gameArray[4].textContent == "X" && gameArray[5].textContent == "X") ||
+        (gameArray[3].textContent == "O" && gameArray[4].textContent == "O" && gameArray[5].textContent == "O") ||
+
+        //3rd row
+        (gameArray[6].textContent == "X" && gameArray[7].textContent == "X" && gameArray[8].textContent == "X") ||
+        (gameArray[6].textContent == "O" && gameArray[7].textContent == "O" && gameArray[8].textContent == "O") ||
+
+        //1st column
+        (gameArray[0].textContent == "X" && gameArray[3].textContent == "X" && gameArray[6].textContent == "X") ||
+        (gameArray[0].textContent == "O" && gameArray[3].textContent == "O" && gameArray[6].textContent == "O") ||
+
+        //2nd column
+        (gameArray[1].textContent == "X" && gameArray[4].textContent == "X" && gameArray[7].textContent == "X") ||
+        (gameArray[1].textContent == "O" && gameArray[4].textContent == "O" && gameArray[7].textContent == "O") ||
+
+        //3rd column
+        (gameArray[2].textContent == "X" && gameArray[5].textContent == "X" && gameArray[8].textContent == "X") ||
+        (gameArray[2].textContent == "O" && gameArray[5].textContent == "O" && gameArray[8].textContent == "O") ||
+
+        //diagonal left-right
+        (gameArray[0].textContent == "X" && gameArray[4].textContent == "X" && gameArray[8].textContent == "X") ||
+        (gameArray[0].textContent == "O" && gameArray[4].textContent == "O" && gameArray[8].textContent == "O") ||
+
+        //diagonal right-left
+        (gameArray[2].textContent == "X" && gameArray[4].textContent == "X" && gameArray[6].textContent == "X") ||
+        (gameArray[2].textContent == "O" && gameArray[4].textContent == "O" && gameArray[6].textContent == "O")) {
+
+        // lastSection.removeChild(resetButton);
+
+        if (playerTurn[playerTurn.length - 1] == "p1") {
+
+            endMessage.textContent = "Game Over, " + playerOne.name + " won!"
+        }
+        else if (playerTurn[playerTurn.length -1] == "p2"){
+            endMessage.textContent = "Game Over, " + playerTwo.name + " won!"
+        }
+
+        lastSection.prepend(endMessage);
+        playerTurn.push('end');
+
+    }
+
+}
+
+const resetButton = document.querySelector('button');
+
+resetButton.onclick = function () {
+    const boxes = document.querySelectorAll('box');
+
+    for (let i = 0; i < boxes.length; i++) {
+        boxes[i].textContent = "";
+    }
+
+    const playerTilesArray = [playerOneX, playerOneO, playerTwoX, playerTwoO];
+
+    for (let i = 0; i < playerTilesArray.length; i++) {
+        playerTilesArray[i].style.color = 'black';
+    }
+
+    endMessage.remove();
+    playerTurn = [];
 }
