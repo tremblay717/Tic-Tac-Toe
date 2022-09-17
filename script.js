@@ -149,7 +149,6 @@ function changeNameTwo() {
 
 // Only player One can decide its symbol (X or O);
 function playerOneXFunc() {
-    console.log("hello")
     if (playerTurn.length > 0) {
         return;
     } else if (playerOneO.style.color == 'blue') {
