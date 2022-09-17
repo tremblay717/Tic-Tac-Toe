@@ -1,7 +1,8 @@
 const gameDiv = document.querySelector('.gameDiv');
 
-// const box = document.createElement('box')
-// box.className= 'gridBox';
+let player1Name = "Player One";
+let player2Name = "Player Two";
+
 let gameArray = [];
 
 const grid = document.createElement('div');
@@ -31,18 +32,22 @@ const tile = {
     o: 'O'
 }
 
-
 const playerOne = {
-    name: 'Player One',
+    name: player1Name,
+    playerOneTextContent: document.createElement('div'),
     playerOneText: function () {
 
-        const playerOneText = document.createElement('p');
-        playerOneText.className = 'player';
-        playerOneText.textContent = playerOne.name;
+        this.playerOneTextContent.className = 'player';
+
+        const playerText = document.createElement('p');
+        playerText.id = 'player1';
+        playerText.textContent = playerOne.name;
+
+        this.playerOneTextContent.appendChild(playerText);
 
         const tileDiv = document.createElement('div');
         tileDiv.className = 'tileDiv';
-        playerOneText.appendChild(tileDiv);
+        this.playerOneTextContent.appendChild(tileDiv);
 
         const x = document.createElement('span');
         x.id = 'playerOneX';
@@ -60,21 +65,31 @@ const playerOne = {
         O.textContent = tile.o;
         tileDiv.appendChild(O);
 
-        return gameDiv.appendChild(playerOneText);
+        const playerOneChangeName = document.createElement('span');
+        playerOneChangeName.id = 'playerOneChangeName'
+        playerOneChangeName.textContent = "Change Name";
+        this.playerOneTextContent.appendChild(playerOneChangeName);
+        playerOneChangeName.setAttribute('onclick', 'changeNameOne(this.playerText);')
+
+        return gameDiv.appendChild(this.playerOneTextContent);
     }
 }
 
 const playerTwo = {
-    name: 'Player Two',
+    name: player2Name,
+    playerTwoTextContent: document.createElement('div'),
     playerTwoText: function () {
 
-        const playerTwoText = document.createElement('p');
-        playerTwoText.className = 'player';
-        playerTwoText.textContent = playerTwo.name;
+        this.playerTwoTextContent.className = 'player';
+        const playerText = document.createElement('p');
+        playerText.id = 'player2';
+        playerText.textContent = playerTwo.name;
 
-        const tileDiv = document.createElement('div')
+        this.playerTwoTextContent.appendChild(playerText);
+
+        const tileDiv = document.createElement('div');
         tileDiv.className = 'tileDiv';
-        playerTwoText.appendChild(tileDiv)
+        this.playerTwoTextContent.appendChild(tileDiv);
 
         const x = document.createElement('span');
         x.id = 'playerTwoX';
@@ -92,24 +107,49 @@ const playerTwo = {
         O.textContent = tile.o;
         tileDiv.appendChild(O);
 
-        return gameDiv.appendChild(playerTwoText);
+        const playerTwoChangeName = document.createElement('span');
+        playerTwoChangeName.id = 'playerTwoChangeName'
+        playerTwoChangeName.textContent = "Change Name";
+        this.playerTwoTextContent.appendChild(playerTwoChangeName);
+        playerTwoChangeName.setAttribute('onclick', 'changeNameTwo(this.playerText);')
+
+        return gameDiv.appendChild(this.playerTwoTextContent);
     }
 }
 
 playerOne.playerOneText();
 gameDiv.appendChild(grid)
-// Gameboard.gameBoard();
 playerTwo.playerTwoText();
 
 const playerOneX = document.getElementById('playerOneX');
+playerOneX.setAttribute('onclick', 'playerOneXFunc()');
 const playerOneO = document.getElementById('playerOneO');
+playerOneO.setAttribute('onclick', 'playerOneOFunc()');
 
 const playerTwoX = document.getElementById('playerTwoX');
 const playerTwoO = document.getElementById('playerTwoO');
 
-// Only player One can decide its symbol (X or O);
-playerOneX.onclick = function () {
 
+// Allows player One to change his/her name
+function changeNameOne() {
+
+    const p1 = document.getElementById('player1');
+    p1.textContent = prompt("Enter your Name");
+    playerOne.name = p1.textContent;
+
+}
+
+// Allows player Two to change his/her name
+function changeNameTwo() {
+    const p2 = document.getElementById('player2');
+    p2.textContent = prompt("Enter your Name");
+    playerTwo.name = p2.textContent;
+
+}
+
+// Only player One can decide its symbol (X or O);
+function playerOneXFunc() {
+    console.log("hello")
     if (playerTurn.length > 0) {
         return;
     } else if (playerOneO.style.color == 'blue') {
@@ -123,7 +163,7 @@ playerOneX.onclick = function () {
     }
 }
 
-playerOneO.onclick = function () {
+function playerOneOFunc() {
     if (playerTurn.length > 0) {
         return;
     } else if (playerOneX.style.color == 'blue') {
@@ -137,13 +177,13 @@ playerOneO.onclick = function () {
     }
 }
 
-
 let lastSection = document.querySelector('.lastSection');
 
 const endMessage = document.createElement('span');
 
 const boxes = document.querySelectorAll('.gridBox')
 
+// We store in an array every time a player plays so we know who was the last one to play
 let playerTurn = []
 
 // We call our Game Function when player One clicks on a tile
@@ -220,17 +260,14 @@ function Game(id) {
         if (playerTurn[playerTurn.length - 1] == "p1") {
 
             endMessage.textContent = "Game over, " + playerOne.name + " won!"
-        }
-        else if (playerTurn[playerTurn.length -1] == "p2"){
+        } else if (playerTurn[playerTurn.length - 1] == "p2") {
             endMessage.textContent = "Game over, " + playerTwo.name + " won!"
         }
 
         lastSection.prepend(endMessage);
         playerTurn.push('end');
 
-    } 
-
-    else if (playerTurn.length == 9){
+    } else if (playerTurn.length == 9) {
         endMessage.textContent = "Game over, it's a tie!";
         lastSection.prepend(endMessage);
         playerTurn.push('end');
@@ -238,7 +275,7 @@ function Game(id) {
 
 }
 
-
+// Reset function - Allows players to start a new game
 const resetButton = document.querySelector('button');
 
 resetButton.onclick = function () {
