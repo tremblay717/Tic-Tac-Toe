@@ -49,6 +49,7 @@ body {
 box {
     border: solid black;
     border-width: 1px;
+    background-color: white;
 }
 
 .player {
@@ -110,4 +111,5 @@ box {
     justify-content: center;
     color:black;
     font-size:4rem;
+    background-color: white;
 }
