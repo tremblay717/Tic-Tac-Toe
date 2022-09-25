@@ -11,17 +11,19 @@ class Game {
     }
 }
 
-Game.prototype.GameBoard = function () {
+class GameBoard extends Game {
 
-    for (let i = 0; i < 9; i++) {
-        const box = document.createElement('box');
-        box.className = 'gridBox';
-        box.id = i + "box";
-        box.setAttribute('onclick', 'TicTacToe_Game(this.id)');
-        grid.appendChild(box);
-        gameArray.push(box);
+    generatingGrid() {
+        for (let i = 0; i < 9; i++) {
+            const box = document.createElement('box');
+            box.className = 'gridBox';
+            box.id = i + "box";
+            box.setAttribute('onclick', 'TicTacToe_Game(this.id)');
+            grid.appendChild(box);
+            gameArray.push(box);
+        }
+        gameDiv.appendChild(grid);
     }
-    gameDiv.appendChild(grid)
 }
 
 let playerArray = [];
@@ -29,7 +31,7 @@ let playerObjArray = [];
 
 class Players extends Game {
 
-    generatingPlayers () {
+    generatingPlayers() {
         const divPlayer = document.createElement('div');
         divPlayer.className = 'divPlayer';
         for (let i = 0; i < playerObjArray.length; i++) {
@@ -241,8 +243,9 @@ playerObjArray.push(player1);
 const player2 = new Player('Player2');
 playerObjArray.push(player2);
 
+let gameBoard = new GameBoard();
 let players = new Players()
 
 
-TicTacToe.GameBoard(); // Calling our objects 
+gameBoard.generatingGrid(); // Calling our objects 
 players.generatingPlayers()
